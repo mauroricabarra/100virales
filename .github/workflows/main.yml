@@ -1,1 +1,33 @@
+name: Scraper La 100 Virales
 
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # corre cada 6 horas
+  workflow_dispatch:          # también podés correrlo a mano desde GitHub
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install selenium webdriver-manager beautifulsoup4 lxml
+
+      - name: Correr scraper
+        run: python la100_rss_scraper.py
+
+      - name: Publicar archivos actualizados
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add la100_virales.json la100_virales.xml
+          git diff --staged --quiet || git commit -m "update: virales $(date -u '+%Y-%m-%d %H:%M')"
+          git push
