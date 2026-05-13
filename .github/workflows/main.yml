@@ -2,8 +2,8 @@ name: Scraper La 100 Virales
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # corre cada 6 horas
-  workflow_dispatch:          # también podés correrlo a mano desde GitHub
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   scrape:
