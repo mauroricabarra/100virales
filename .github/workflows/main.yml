@@ -34,4 +34,4 @@ jobs:
           git rebase origin/main
           git add la100_virales.json la100_virales.xml
           git diff --staged --quiet || git commit -m "update: virales $(date -u '+%Y-%m-%d %H:%M')"
-          git push origin main
+          git push --force origin main
